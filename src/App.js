@@ -1,18 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import CatalogPage from './pages/CatalogPage';
+import FavoriteCars from './pages/FavoriteCars';
+import CarDetails from './components/CarDetails';
+import NotFound from './pages/NotFound';
+import './App.css';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>
-);
 
-reportWebVitals();
+function App() {
+  return (
+    <div className="App">
+      <Routes>
+        <Route path='/' index element={<HomePage />} />
+        <Route path='/catalog' element={<CatalogPage />} />
+        <Route path='/favorites' element={<FavoriteCars />} />
+        <Route path="/catalog/:carId" element={<CarDetails />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </div>
+  );
+}
+
+export default App;
 
