@@ -1,0 +1,55 @@
+.home_container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+    height: 100%;
+    background-image: url(https://press.ocenin.ru/wp-content/uploads/2019/03/1-4.jpg);
+    background-size: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 60rem;
+    width: 100%;
+}
+
+.home {
+    padding: 50px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.title {
+    font-size: 44px;
+    text-shadow: 4px 4px 6px #000000;
+    color: #ffffff
+}
+
+.text {
+    font-size: 24px;
+    text-shadow:  4px 4px 6px #000000;
+    color: #ffffff
+}
+
+.button {
+    display: flex;
+    width: 174px;
+    padding: 12px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    border: none;
+    background: #3471ffbc;
+    color: #ffffff;
+    font-family: Manrope;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.42;
+    cursor: pointer;
+}
+
+.button:hover,
+.button:focus {
+    background-color: #0b45cdcd;
+    transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}

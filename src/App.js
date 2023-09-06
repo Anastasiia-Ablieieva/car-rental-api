@@ -1,21 +1,18 @@
 import { Route, Routes } from 'react-router-dom';
-import HomePage from './pages/HomePage';
-import CatalogPage from './pages/CatalogPage';
-import FavoriteCars from './pages/FavoriteCars';
+import HomePage from './pages/HomePage/HomePage';
+import CatalogPage from './pages/CatalogPage/CatalogPage';
+import FavoriteCars from './pages/FavoriteCars/FavoriteCars';
 import CarDetails from './components/CarDetails';
-import NotFound from './pages/NotFound';
-import './App.css';
-
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <Routes>
         <Route path='/' index element={<HomePage />} />
         <Route path='/catalog' element={<CatalogPage />} />
         <Route path='/favorites' element={<FavoriteCars />} />
         <Route path="/catalog/:carId" element={<CarDetails />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<HomePage />} />
       </Routes>
     </div>
   );
