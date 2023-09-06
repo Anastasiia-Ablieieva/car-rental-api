@@ -6,14 +6,18 @@ function CatalogPage() {
     const [favorites, setFavorites] = useState([]);
     const [visibleAdverts, setVisibleAdverts] = useState([]);
     const itemsPerPage = 8; 
+    const [pageNumber, setPageNumber] = useState(1);
 
     // Завантаження оголошень 
     useEffect(() => {
         fetch('https://6479f683a455e257fa642081.mockapi.io/advert')
             .then((response) => response.json())
-            .then((data) => setAdverts(data))
+            .then((data) => {
+                setAdverts(data);
+                setVisibleAdverts(data.slice(0, itemsPerPage));
+            })
             .catch((error) => console.error('Помилка при завантаженні оголошень:', error));
-        }, []);
+    }, []);
 
     // Додавання до списку улюблених
     const addToFavorites = (advertId) => {
@@ -40,45 +44,56 @@ function CatalogPage() {
     const loadMore = () => {
         const startIndex = visibleAdverts.length;
         const endIndex = startIndex + itemsPerPage;
-        setVisibleAdverts(adverts.slice(startIndex, endIndex));
+        setVisibleAdverts([...visibleAdverts, ...adverts.slice(startIndex, endIndex)]);
     };
 
     return (
-    <div className={css.catalog_container}>
-        <div>
+    <div >
+        <div className={css.catalog_container}>
             {adverts.map((advert) => (
             <div className={css.catalog_card} key={advert.id}>
-                <img src={advert.img} alt={`${advert.marke} ${advert.model}`} />
-                <h3>{advert.marke} </h3> 
-                <h3>{advert.model} </h3>
-                <h3>{advert.year} </h3>
-                <p>{advert.rentalPrice} <span className={css.span}>|</span> </p>
-                <div>
+                <img className={css.img} src={advert.img} alt={`${advert.marke} ${advert.model}`} />
+                <div className={css.price_container}>
+                    <div className={css.price_container}>                    
+                        <p>{advert.marke} </p> 
+                        <p style={{color: '#3470FF'}}>{advert.model} </p>
+                        <p>{advert.year} </p>
+                    </div>
+                    <p>{advert.rentalPrice}</p>
+                </div>
+                <div className={css.description_container}>
                     {splitAddress(advert.address) && (
                         <>
-                            <p>{splitAddress(advert.address).city} <span className={css.span}>|</span> </p>
-                            <p>{splitAddress(advert.address).country} <span className={css.span}>|</span> </p>
+                            <p>{splitAddress(advert.address).city}</p>
+                            <span className={css.span}>|</span>
+                            <p>{splitAddress(advert.address).country}</p>
+                            <span className={css.span}>|</span>
                         </>
                     )}
+                    <p>{advert.type}</p><span className={css.span}>|</span>
+                    <p>{advert.rentalCompany}</p><span className={css.span}>|</span>
+                    <p>{advert.marke}</p><span className={css.span}>|</span>
+                    <p>{advert.id}</p><span className={css.span}>|</span>
+                    <p>{advert.accessories[0]}</p>
                 </div>
-                <p>{advert.type} <span className={css.span}>|</span> </p>
-                <p>{advert.marke} <span className={css.span}>|</span> </p>
-                <p>{advert.id} <span className={css.span}>|</span> </p>
-
+                <button className={css.button}>Learn more</button>
                 {favorites.includes(advert.id) ? (
-                <button onClick={() => removeFromFavorites(advert.id)}>
-                    Видалити з улюблених
+                <button className={css.button_add} onClick={() => removeFromFavorites(advert.id)}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 18 18" fill="none">
+                        <path d="M15.63 3.4575C15.2469 3.07425 14.7921 2.77023 14.2915 2.56281C13.7909 2.35539 13.2543 2.24863 12.7125 2.24863C12.1706 2.24863 11.634 2.35539 11.1334 2.56281C10.6329 2.77023 10.178 3.07425 9.79497 3.4575L8.99997 4.2525L8.20497 3.4575C7.4312 2.68373 6.38174 2.24903 5.28747 2.24903C4.19319 2.24903 3.14374 2.68373 2.36997 3.4575C1.5962 4.23127 1.1615 5.28072 1.1615 6.375C1.1615 7.46927 1.5962 8.51873 2.36997 9.2925L3.16497 10.0875L8.99997 15.9225L14.835 10.0875L15.63 9.2925C16.0132 8.90943 16.3172 8.45461 16.5247 7.95401C16.7321 7.45342 16.8388 6.91686 16.8388 6.375C16.8388 5.83313 16.7321 5.29657 16.5247 4.79598C16.3172 4.29539 16.0132 3.84056 15.63 3.4575Z" fill="#3470FF" stroke="#3470FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                 </button>
                 ) : (
-                <button onClick={() => addToFavorites(advert.id)}>
-                    Додати до улюблених
+                <button className={css.button_add} onClick={() => addToFavorites(advert.id)}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 18 18" fill="none">
+                        <path d="M15.63 3.4575C15.2469 3.07425 14.7921 2.77023 14.2915 2.56281C13.7909 2.35539 13.2543 2.24863 12.7125 2.24863C12.1706 2.24863 11.634 2.35539 11.1334 2.56281C10.6329 2.77023 10.178 3.07425 9.79497 3.4575L8.99997 4.2525L8.20497 3.4575C7.4312 2.68373 6.38174 2.24903 5.28747 2.24903C4.19319 2.24903 3.14374 2.68373 2.36997 3.4575C1.5962 4.23127 1.1615 5.28072 1.1615 6.375C1.1615 7.46927 1.5962 8.51873 2.36997 9.2925L3.16497 10.0875L8.99997 15.9225L14.835 10.0875L15.63 9.2925C16.0132 8.90943 16.3172 8.45461 16.5247 7.95401C16.7321 7.45342 16.8388 6.91686 16.8388 6.375C16.8388 5.83313 16.7321 5.29657 16.5247 4.79598C16.3172 4.29539 16.0132 3.84056 15.63 3.4575Z" stroke="white" stroke-opacity="0.8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                 </button>
                 )}
-                <button>Learn more</button>
             </div>))}
         </div>
         {visibleAdverts.length < adverts.length && (
-            <button onClick={loadMore}>Load more</button>
+            <button className={css.load_more} onClick={loadMore}>Load more</button>
         )}
     </div>
     );
