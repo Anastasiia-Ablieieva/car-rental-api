@@ -2,8 +2,8 @@ import { Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage/HomePage';
 import CatalogPage from './pages/CatalogPage/CatalogPage';
 import FavoriteCarsPage from './pages/FavoriteCarsPage/FavoriteCarsPage';
-import CarDetails from './components/CarDetails';
 import { SharedLayout } from './components/SharedLayout/SharedLayout';
+import CarDetails from './components/CarDetails/CarDetails';
 
 function App() {
   return (

@@ -8,6 +8,7 @@ function CatalogPage() {
     const [favorites, setFavorites] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [displayedAdverts, setDisplayedAdverts] = useState(8);
+    const [showBackToTop, setShowBackToTop] = useState(false);
 
     useEffect(() => {
         fetch('https://6479f683a455e257fa642081.mockapi.io/advert')
@@ -37,6 +38,18 @@ function CatalogPage() {
         setDisplayedAdverts(displayedAdverts + 8);
     };
 
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    useEffect(() => {
+        if (displayedAdverts >= adverts.length) {
+            setShowBackToTop(true);
+        } else {
+            setShowBackToTop(false);
+        }
+    }, [displayedAdverts, adverts]);
+
     return (
         <>
             {isLoading ? (
@@ -54,7 +67,15 @@ function CatalogPage() {
                             />
                         ))}
                     </div>
-                    <button className={css.load_more} onClick={loadMoreAdverts}>Load more</button>
+                    {showBackToTop ? (
+                        <button className={css.back_to_top} onClick={scrollToTop}>
+                            Back to Top
+                        </button>
+                    ) : (
+                        <button className={css.load_more} onClick={loadMoreAdverts}>
+                            Load more
+                        </button>
+                    )}
                 </>
             )}
         </>

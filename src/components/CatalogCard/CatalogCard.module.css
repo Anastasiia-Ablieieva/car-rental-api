@@ -7,9 +7,21 @@
 
 .img {
     margin-bottom: 14px;
-    max-width: 100%;
+    max-width: auto;
     height: 268px;
+}
+
+.img_container {
+    display: flex;
+    justify-content: center;
+    height: 286px;
+    overflow: hidden;
     border-radius: 12px;
+}
+
+.img-container img {
+    width: 100%;
+    height: auto; 
 }
 
 .title_container {
@@ -29,7 +41,6 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    /* gap: 8px; */
     color: rgba(18, 20, 23, 0.50);
     font-family: Manrope;
     font-size: 12px;
