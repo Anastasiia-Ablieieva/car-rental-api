@@ -10,7 +10,7 @@ function App() {
     <div>
       <Routes>
         <Route path="/" element={<SharedLayout />}>
-          <Route path='/' index element={<HomePage />} />
+          <Route index element={<HomePage />} />
           <Route path='/catalog' element={<CatalogPage />} />
           <Route path='/favorites' element={<FavoriteCarsPage />} />
           <Route path="/catalog/:carId" element={<CarDetails />} />
